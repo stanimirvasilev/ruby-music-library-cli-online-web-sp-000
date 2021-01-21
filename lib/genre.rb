@@ -30,9 +30,6 @@ class Genre
   end 
   
   def self.create(name)
-    @@all << self.name
-    self.name
-
    genre = Genre.new(name)
    genre.save
    genre
