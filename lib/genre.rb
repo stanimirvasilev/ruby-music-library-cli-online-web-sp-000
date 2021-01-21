@@ -32,10 +32,17 @@ class Genre
   def self.create(name)
     @@all << self.name
     self.name
+
+   genre = Genre.new(name)
+   genre.save
+   genre
+
   end
   
   def artists
     self.songs.collect {|s| s.artist}.uniq
   end
   
+
 end
+

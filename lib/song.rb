@@ -24,7 +24,8 @@ class Song
   end
   end 
    
-   def genre=(genre)
+
+  def genre=(genre)
     @genre = genre
     if !(genre.songs.include?(self))
       genre.songs << self
@@ -33,6 +34,7 @@ class Song
   end
     
 
+
    def artist=(artist)
   @artist = artist
  @artist.add_song(self)
@@ -40,14 +42,17 @@ end
   
   
   
+
+  def artist=(artist)
+      @artist = artist
+     @artist.add_song(self)
+  end
+
   
   def self.destroy_all
   @@all.clear  
   end 
-  
-   
-  
-  
+
 
   def self.create(name)
      song = Song.new(name)
@@ -68,4 +73,23 @@ end
   end
 
 
+
+
+  
+  def self.new_from_filename(filename)
+    info = filename.split(" - ")
+    artist, name, genre = info[0], info[1], info[2].gsub( ".mp3" , "")
+    genre = Genre.find_or_create_by_name(genre)
+    artist = Artist.find_or_create_by_name(artist)
+    new_song = self.new(name, artist, genre)
+  end
+      
+      
+  def self.create_from_filename(filename)
+    
+    new_from_filename(filename).tap{ |s| s.save}
+
+  end    
+   
+   
 end
